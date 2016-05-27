@@ -1,4 +1,4 @@
-defmodule Peepchat.Repo.Migrations.CreateUsers do
+defmodule Peepchat.Repo.Migrations.CreateUser do
   use Ecto.Migration
 
   def change do
@@ -8,7 +8,8 @@ defmodule Peepchat.Repo.Migrations.CreateUsers do
 
       timestamps
     end
- 
+
+    #Unique email address constraint, via DB index
     create index(:users, [:email], unique: true)
   end
 end

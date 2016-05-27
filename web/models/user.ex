@@ -1,11 +1,11 @@
-defmodule Peepchat.Users do
+defmodule Peepchat.User do
   use Peepchat.Web, :model
 
   schema "users" do
     field :email, :string
     field :password_hash, :string
 
-    #Two virtual fields for password confirmation
+    # Two virtual fields for password confirmation
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
 
@@ -14,7 +14,7 @@ defmodule Peepchat.Users do
 
   @required_fields ~w(email password password_confirmation)
   @optional_fields ~w()
-
+  
   @doc """
   Creates a changeset based on the `model` and `params`.
 
@@ -28,12 +28,13 @@ defmodule Peepchat.Users do
     |> validate_length(:password, min: 8)
     |> validate_confirmation(:password)
     |> hash_password
-    |> unique_constraint(:email)
+    |> unique_constraint(:email) 
   end
 
   defp hash_password(%{valid?: false} = changeset), do: changeset
   defp hash_password(%{valid?: true} = changeset) do
     hashedpw = Comeonin.Bcrypt.hashpwsalt(Ecto.Changeset.get_field(changeset, :password))
-    Ecto.Changeset.put_change(changeset, :password_hash, hashedpw)
+      Ecto.Changeset.put_change(changeset, :password_hash, hashedpw)
   end
+
 end
