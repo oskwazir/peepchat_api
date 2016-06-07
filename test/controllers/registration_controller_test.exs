@@ -3,11 +3,11 @@ defmodule Peepchat.RegistrationControllerTest do
 
     alias Peepchat.User
 
-    @valid_attrs %{
-        email: "omer@example.com",
-        password: "kotoriscool",
-        password_confirmation: "kotoriscool"
-    }
+  @valid_attrs %{
+    "email" => "omer@example.com",
+    "password" => "kotoriscool",
+    "password-confirmation" => "kotoriscool"
+  }
 
     @invalid_attrs %{}
 
@@ -15,12 +15,12 @@ defmodule Peepchat.RegistrationControllerTest do
         {:ok, conn: put_req_header(conn, "accept", "application/json")}
     end
 
-    test "creates and renders resource when data is valid", %{conn: conn} do
-    conn = post conn, registration_path(conn, :create), %{data: %{type: "user",
+  test "creates and renders resource when data is valid", %{conn: conn} do
+    conn = post conn, registration_path(conn, :create), %{data: %{type: "users",
       attributes: @valid_attrs
       }}
     assert json_response(conn, 201)["data"]["id"]
-    assert Repo.get_by(User, %{email: @valid_attrs[:email]})
+    assert Repo.get_by(User, %{email: @valid_attrs["email"]})
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
@@ -30,4 +30,5 @@ defmodule Peepchat.RegistrationControllerTest do
       }}
     end
   end
+
 end
